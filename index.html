@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swaply | Login</title>
+    <title>Swaply | App</title>
     <style>
+        /* Mantenemos los estilos aquí para que carguen instantáneamente con el Splash */
         :root {
             --deep-brown: #1a120b;
             --accent-blue: #00d2ff;
             --soft-brown: #3d2b1f;
-            --text-light: #f4f4f4;
             --card-bg: #ffffff;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Segoe UI', sans-serif;
             background-color: #f8f5f2;
             overflow-x: hidden;
@@ -33,11 +32,10 @@
 
         /* --- 2. PANTALLA DE LOGIN --- */
         #login-screen {
-            display: none; /* Se activa vía JS */
+            display: none;
             height: 100vh;
             justify-content: center;
             align-items: center;
-            background: #f8f5f2;
         }
 
         .login-card {
@@ -51,35 +49,23 @@
             animation: slideUp 0.5s ease-out;
         }
 
-        .login-card h2 { color: var(--deep-brown); margin-bottom: 25px; }
-
         .input-group { margin-bottom: 15px; text-align: left; }
         .input-group label { display: block; font-size: 0.8rem; margin-bottom: 5px; color: #666; }
         .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            outline: none;
+            width: 100%; padding: 12px;
+            border: 1px solid #ddd; border-radius: 8px;
+            box-sizing: border-box; outline: none;
         }
 
         .btn-login {
-            width: 100%;
-            padding: 12px;
+            width: 100%; padding: 12px;
             background-color: var(--accent-blue);
-            border: none;
-            border-radius: 8px;
-            color: var(--deep-brown);
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
+            border: none; border-radius: 8px;
+            color: var(--deep-brown); font-weight: bold;
+            cursor: pointer; transition: 0.3s;
         }
 
-        .btn-login:hover { transform: scale(1.02); filter: brightness(1.1); }
-
-        /* --- 3. INTERFAZ PRINCIPAL (MAIN) --- */
+        /* --- 3. INTERFAZ PRINCIPAL --- */
         #main-content { display: none; opacity: 0; transition: opacity 1s ease; }
         header { background-color: var(--deep-brown); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
         .logo { color: var(--accent-blue); font-weight: 800; font-size: 1.5rem; text-decoration: none; }
@@ -100,7 +86,7 @@
 
     <div id="login-screen">
         <div class="login-card">
-            <h2>Iniciar Sesión</h2>
+            <h2 style="color: var(--deep-brown);">Iniciar Sesión</h2>
             <div class="input-group">
                 <label>Correo electrónico</label>
                 <input type="email" id="email" placeholder="tu@correo.com">
@@ -123,42 +109,8 @@
             <h2>¡Hola! Todo listo para el trueque</h2>
             <p>Explora lo que otros tienen para ofrecer.</p>
         </section>
-        </div>
+    </div>
 
-    <script>
-        // 1. Manejo del Splash
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                const login = document.getElementById('login-screen');
-
-                splash.style.opacity = '0';
-                setTimeout(() => {
-                    splash.style.display = 'none';
-                    login.style.display = 'flex'; // Mostramos el login después del splash
-                }, 800);
-            }, 2000);
-        });
-
-        // 2. Manejo del Login (Simulación profesional)
-        function handleLogin() {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('pass').value;
-
-            if(email && pass) {
-                // Simulación de éxito
-                document.getElementById('login-screen').style.display = 'none';
-                const main = document.getElementById('main-content');
-                main.style.display = 'block';
-                setTimeout(() => {
-                    main.style.opacity = '1';
-                    document.getElementById('user-display').innerText = email;
-                }, 10);
-            } else {
-                alert("Por favor, completa los campos para entrar.");
-            }
-        }
-    </script>
     <script src="script.js"></script>
 </body>
 </html>
