@@ -3,98 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swaply | Bienvenido</title>
+    <title>Swaply | Login</title>
     <style>
-        /* Estilos base con un toque premium */
+        :root {
+            --deep-brown: #1a120b;
+            --accent-blue: #00d2ff;
+            --soft-brown: #3d2b1f;
+            --text-light: #f4f4f4;
+            --card-bg: #ffffff;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f5f2;
+            overflow-x: hidden;
+        }
+
+        /* --- 1. SPLASH SCREEN --- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #3d2b1f 0%, #1a120b 100%);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        /* --- 2. PANTALLA DE LOGIN --- */
+        #login-screen {
+            display: none; /* Se activa vía JS */
+            height: 100vh;
             justify-content: center;
             align-items: center;
-            /* Degradado sutil para dar profundidad al marrón */
-            background: radial-gradient(circle, #3d2b1f 0%, #1a120b 100%);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
+            background: #f8f5f2;
         }
 
-        .splash-container {
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
             text-align: center;
-            animation: fadeIn 1.2s ease-out;
+            animation: slideUp 0.5s ease-out;
         }
 
-        /* Tipografía moderna y con "glow" azul */
-        .brand-name {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: #00d2ff; /* Azul vibrante */
-            margin: 0;
-            text-transform: lowercase; /* Estilo startup moderna */
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+        .login-card h2 { color: var(--deep-brown); margin-bottom: 25px; }
+
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; font-size: 0.8rem; margin-bottom: 5px; color: #666; }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
         }
 
-        .brand-name span {
-            color: #ffffff;
-            opacity: 0.9;
-        }
-
-        /* Indicador de carga minimalista */
-        .loading-bar-container {
-            width: 180px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin: 25px auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loading-bar-progress {
-            width: 40%;
-            height: 100%;
-            background: #00d2ff;
-            border-radius: 10px;
-            position: absolute;
-            animation: shift 1.5s infinite ease-in-out;
-        }
-
-        .tagline {
-            color: #a68d7a; /* Marrón claro/arena para contraste suave */
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-blue);
+            border: none;
+            border-radius: 8px;
+            color: var(--deep-brown);
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
             margin-top: 10px;
-            font-weight: 500;
         }
 
-        /* Animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        .btn-login:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        /* --- 3. INTERFAZ PRINCIPAL (MAIN) --- */
+        #main-content { display: none; opacity: 0; transition: opacity 1s ease; }
+        header { background-color: var(--deep-brown); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { color: var(--accent-blue); font-weight: 800; font-size: 1.5rem; text-decoration: none; }
+        .logo span { color: white; }
+        .hero { background: var(--soft-brown); color: white; padding: 40px 20px; text-align: center; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        @keyframes shift {
-            0% { left: -40%; }
-            50% { left: 100%; }
-            100% { left: -40%; }
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="splash-container">
-        <h1 class="brand-name">swap<span>ly</span></h1>
-        
-        <div class="loading-bar-container">
-            <div class="loading-bar-progress"></div>
-        </div>
-
-        <p class="tagline">Intercambia tu mundo</p>
+    <div id="splash-screen">
+        <h1 style="color:var(--accent-blue); font-size: 3rem;">swap<span style="color:white">ly</span></h1>
     </div>
 
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>Iniciar Sesión</h2>
+            <div class="input-group">
+                <label>Correo electrónico</label>
+                <input type="email" id="email" placeholder="tu@correo.com">
+            </div>
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" id="pass" placeholder="••••••••">
+            </div>
+            <button class="btn-login" onclick="handleLogin()">Entrar a Swaply</button>
+            <p style="font-size: 0.8rem; margin-top: 15px; color: #777;">¿No tienes cuenta? <a href="#" style="color: var(--accent-blue);">Regístrate</a></p>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <a href="#" class="logo">swap<span>ly</span></a>
+            <p style="color: white; font-size: 0.8rem;" id="user-display"></p>
+        </header>
+        <section class="hero">
+            <h2>¡Hola! Todo listo para el trueque</h2>
+            <p>Explora lo que otros tienen para ofrecer.</p>
+        </section>
+        </div>
+
+    <script>
+        // 1. Manejo del Splash
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const login = document.getElementById('login-screen');
+
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    login.style.display = 'flex'; // Mostramos el login después del splash
+                }, 800);
+            }, 2000);
+        });
+
+        // 2. Manejo del Login (Simulación profesional)
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+
+            if(email && pass) {
+                // Simulación de éxito
+                document.getElementById('login-screen').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                setTimeout(() => {
+                    main.style.opacity = '1';
+                    document.getElementById('user-display').innerText = email;
+                }, 10);
+            } else {
+                alert("Por favor, completa los campos para entrar.");
+            }
+        }
+    </script>
 </body>
 </html>
