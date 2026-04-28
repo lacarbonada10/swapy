@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swaply | App</title>
+    <title>Swaply | Bienvenido</title>
     <style>
-        /* Mantenemos los estilos aquí para que carguen instantáneamente con el Splash */
         :root {
             --deep-brown: #1a120b;
             --accent-blue: #00d2ff;
@@ -30,9 +29,9 @@
             transition: opacity 0.8s ease, visibility 0.8s;
         }
 
-        /* --- 2. PANTALLA DE LOGIN --- */
+        /* --- 2. PANTALLA DE ACCESO --- */
         #login-screen {
-            display: none;
+            display: none; /* Se activa vía JS */
             height: 100vh;
             justify-content: center;
             align-items: center;
@@ -49,6 +48,8 @@
             animation: slideUp 0.5s ease-out;
         }
 
+        .login-card h2 { color: var(--deep-brown); margin-bottom: 25px; }
+
         .input-group { margin-bottom: 15px; text-align: left; }
         .input-group label { display: block; font-size: 0.8rem; margin-bottom: 5px; color: #666; }
         .input-group input {
@@ -63,7 +64,10 @@
             border: none; border-radius: 8px;
             color: var(--deep-brown); font-weight: bold;
             cursor: pointer; transition: 0.3s;
+            margin-top: 10px;
         }
+
+        .btn-login:hover { transform: scale(1.02); filter: brightness(1.1); }
 
         /* --- 3. INTERFAZ PRINCIPAL --- */
         #main-content { display: none; opacity: 0; transition: opacity 1s ease; }
@@ -86,17 +90,28 @@
 
     <div id="login-screen">
         <div class="login-card">
-            <h2 style="color: var(--deep-brown);">Iniciar Sesión</h2>
+            <h2 id="auth-title">Iniciar Sesión</h2>
+            
+            <div class="input-group" id="name-group" style="display: none;">
+                <label>Nombre completo</label>
+                <input type="text" id="reg-name" placeholder="Tu nombre">
+            </div>
+
             <div class="input-group">
                 <label>Correo electrónico</label>
                 <input type="email" id="email" placeholder="tu@correo.com">
             </div>
+
             <div class="input-group">
                 <label>Contraseña</label>
                 <input type="password" id="pass" placeholder="••••••••">
             </div>
-            <button class="btn-login" onclick="handleLogin()">Entrar a Swaply</button>
-            <p style="font-size: 0.8rem; margin-top: 15px; color: #777;">¿No tienes cuenta? <a href="#" style="color: var(--accent-blue);">Regístrate</a></p>
+
+            <button class="btn-login" id="auth-btn" onclick="handleAuth()">Entrar a Swaply</button>
+            
+            <p id="toggle-text" style="font-size: 0.8rem; margin-top: 15px; color: #777;">
+                ¿No tienes cuenta? <a href="javascript:void(0)" onclick="toggleAuthMode()" style="color: var(--accent-blue); font-weight: bold; text-decoration: none;">Regístrate</a>
+            </p>
         </div>
     </div>
 
