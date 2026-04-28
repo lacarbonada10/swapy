@@ -1,58 +1,56 @@
-// Esperar a que la ventana cargue totalmente
+// 1. Manejo del Splash Screen
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        const splash = document.getElementById('splash-screen');
-        const login = document.getElementById('login-screen');
+    const splash = document.getElementById('splash-screen');
+    const login = document.getElementById('login-screen');
 
-        if(splash) {
+    setTimeout(() => {
+        if (splash) {
             splash.style.opacity = '0';
             setTimeout(() => {
                 splash.style.display = 'none';
-                if(login) login.style.display = 'flex';
+                if (login) login.style.display = 'flex';
             }, 800);
         }
-    }, 2000); // 2 segundos de splash
+    }, 2000); // 2 segundos de Splash
 });
 
-// Función de validación y entrada
+// 2. Lógica de Login
 function handleLogin() {
     const emailInput = document.getElementById('email');
     const passInput = document.getElementById('pass');
-    
-    const emailValue = emailInput.value;
-    const passValue = passInput.value;
+    const email = emailInput.value.trim();
+    const pass = passInput.value;
 
-    // Validación profesional con Regex
+    // Validación de formato de correo
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailPattern.test(emailValue)) {
-        alert("Por favor, ingresa un correo electrónico válido.");
-        emailInput.style.borderColor = "#ff4b2b";
+    if (!emailPattern.test(email)) {
+        alert("Por favor, introduce un correo electrónico válido.");
+        emailInput.style.borderColor = "red";
         return;
     }
 
-    if (passValue.length < 6) {
+    if (pass.length < 6) {
         alert("La contraseña debe tener al menos 6 caracteres.");
-        passInput.style.borderColor = "#ff4b2b";
+        passInput.style.borderColor = "red";
         return;
     }
 
-    // Si todo es correcto, pasamos a la interfaz principal
-    entrarALaApp(emailValue);
+    // Si todo está bien, entramos
+    irAMain(email);
 }
 
-function entrarALaApp(email) {
-    const loginScreen = document.getElementById('login-screen');
-    const mainContent = document.getElementById('main-content');
-    const userDisplay = document.getElementById('user-display');
+// 3. Transición a la App Principal
+function irAMain(userEmail) {
+    const login = document.getElementById('login-screen');
+    const main = document.getElementById('main-content');
+    const display = document.getElementById('user-display');
 
-    loginScreen.style.opacity = '0';
+    login.style.display = 'none';
+    main.style.display = 'block';
+    
     setTimeout(() => {
-        loginScreen.style.display = 'none';
-        mainContent.style.display = 'block';
-        setTimeout(() => {
-            mainContent.style.opacity = '1';
-            if(userDisplay) userDisplay.innerText = email;
-        }, 50);
-    }, 500);
+        main.style.opacity = '1';
+        if (display) display.innerText = userEmail;
+    }, 50);
 }
